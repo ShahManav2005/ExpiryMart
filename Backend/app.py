@@ -10,14 +10,7 @@ from routes.auth_routes import auth
 app = Flask(__name__)
 app.secret_key = "expirymart123"
 
-CORS(app, supports_credentials=True, origins=[
-    "http://127.0.0.1:5500",
-    "http://127.0.0.1:5501",
-    "http://127.0.0.1:5502",
-    "http://localhost:5500",
-    "http://localhost:5501",
-    "http://localhost:5502"
-])
+CORS(app, supports_credentials=True, origins="*")
 
 app.register_blueprint(product_routes)
 app.register_blueprint(inspector_routes)
