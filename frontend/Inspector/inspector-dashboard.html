@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Inspector Dashboard – ExpiryMart</title>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: linear-gradient(120deg, #eef2ff, #ffffff);
+      }
+
+      nav {
+        background: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      nav ul {
+        display: flex;
+        justify-content: flex-end;
+        list-style: none;
+        padding: 15px 60px;
+        margin: 0;
+      }
+
+      nav ul li {
+        padding: 10px 20px;
+        font-size: 18px;
+        cursor: pointer;
+      }
+
+      nav ul li a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      nav ul li a:hover,
+      nav ul li:hover {
+        color: #2f5cff;
+      }
+
+      .container {
+        width: 70%;
+        margin: 40px auto;
+      }
+
+      h1 {
+        font-size: 36px;
+        color: rgb(24, 40, 122);
+      }
+
+      table {
+        width: 100%;
+        background: white;
+        border-collapse: collapse;
+        margin-top: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      }
+
+      th {
+        background: #eef2ff;
+        padding: 12px;
+        text-align: left;
+      }
+
+      td {
+        padding: 12px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .btn {
+        padding: 6px 16px;
+        background: #2f5cff;
+        color: white;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+      }
+    </style>
+
+    <!-- ✅ No script in head -->
+
+  </head>
+
+  <body>
+    <nav>
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li>Inspection Requests</li>
+        <li>Completed Inspections</li>
+        <li>Profile</li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <h1>Inspector Dashboard</h1>
+      <h2>Pending Inspection Requests</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Seller</th>
+            <th>Product</th>
+            <th>Expiry</th>
+            <th>Location</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>  <!-- ✅ exists before script runs -->
+      </table>
+    </div>
+
+    <!-- ✅ Script moved here, just before </body> -->
+    <script>
+
+      function approveProduct(id) {
+        if (!id) { alert("Invalid product ID"); return; }
+        fetch(`http://localhost:5000/inspector/approve/${id}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include"
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.error) { alert("Error: " + data.error); return; }
+            alert("✅ Product Approved!");
+            location.reload();
+          })
+          .catch(err => { alert("Approve failed: " + err.message); console.error(err); });
+      }
+
+      function rejectProduct(id) {
+        if (!id) { alert("Invalid product ID"); return; }
+        const comment = prompt("Enter rejection reason:") || "Rejected by inspector";
+        fetch(`http://localhost:5000/inspector/reject/${id}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ comment })
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.error) { alert("Error: " + data.error); return; }
+            alert("❌ Product Rejected.");
+            location.reload();
+          })
+          .catch(err => { alert("Reject failed: " + err.message); console.error(err); });
+      }
+
+      fetch("http://localhost:5000/inspector/dashboard", {
+          credentials: "include"
+      })
+        .then(res => res.json())
+        .then(data => {
+          const table = document.getElementById("tableBody");
+
+          if (!data.length) {
+            table.innerHTML = `<tr><td colspan="5" style="text-align:center;color:#888;">No pending inspections.</td></tr>`;
+            return;
+          }
+
+          data.forEach(product => {
+            const pid = product.id || "";
+            const row = `
+              <tr>
+                <td>${product.seller_id || "—"}</td>
+                <td>${product.product_name || "—"}</td>
+                <td>${product.expiry_date || "—"}</td>
+                <td>Vadodara</td>
+                <td>
+                  <button onclick="approveProduct('${pid}')" class="btn">Approve</button>
+                  <button onclick="rejectProduct('${pid}')" class="btn" style="background:red;margin-left:6px;">Reject</button>
+                </td>
+              </tr>
+            `;
+            table.innerHTML += row;
+          });
+        })
+        .catch(err => {
+          console.error("Failed to load dashboard:", err);
+          document.getElementById("tableBody").innerHTML =
+            `<tr><td colspan="5" style="color:red;text-align:center;">Failed to load: ${err.message}</td></tr>`;
+        });
+
+    </script>
+
+  </body>
+</html>

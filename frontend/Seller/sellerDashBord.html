@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seller - ExpiryMart</title>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: linear-gradient(120deg, #eef2ff, #ffffff);
+        color: #222;
+      }
+
+      /* NAVBAR */
+
+      nav {
+        background: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      nav ul {
+        display: flex;
+        justify-content: flex-end;
+        list-style: none;
+        margin: 0;
+        padding: 15px 60px;
+      }
+
+      nav ul li {
+        padding: 10px 20px;
+        font-size: 20px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      nav ul li:hover {
+        color: #2f5cff;
+      }
+
+      /* MAIN CONTENT */
+
+      .container {
+        width: 60%;
+        margin-left: 120px;
+        margin-top: 60px;
+      }
+
+      /* HEADINGS */
+
+      h1 {
+        font-size: 70px;
+        color: rgb(24, 40, 122);
+        margin-bottom: 10px;
+      }
+
+      h2 {
+        font-size: 32px;
+        color: rgb(24, 63, 78);
+        margin-bottom: 30px;
+        font-weight: 500;
+      }
+
+      h3 {
+        font-size: 28px;
+        color: #2f5cff;
+        margin-bottom: 15px;
+      }
+
+      /* PARAGRAPH */
+
+      p {
+        font-size: 20px;
+        line-height: 1.8;
+        color: #444;
+      }
+
+      /* BUTTONS */
+
+      .action-buttons {
+        margin-bottom: 40px;
+      }
+
+      .action-buttons button {
+        font-size: 18px;
+        padding: 10px 20px;
+        margin-right: 10px;
+        background: #2f5cff;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      .action-buttons button:hover {
+        background: white;
+        color: #2f5cff;
+        border: 2px solid #2f5cff;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav>
+      <ul>
+        <a href="../index.html"><li>Home</li></a>
+        <a href="addproduct.html"><li>Add Product</li></a>
+        <!-- <li>History</li> -->
+        <a href= "inspection-status.html" ><li>Inspection Status</li></a>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <h1>Hello Seller!</h1>
+
+      <h2>We are happy to help you sell your products.</h2>
+
+      <div class="action-buttons">
+        <a href="addproduct.html"><button>Add Product</button></a>
+        <!-- <button>History</button> -->
+        <a href="inspection-status.html"><button>Inspection Status</button></a>
+      </div>
+
+      <h3>Product Selling Terms & Conditions :</h3>
+
+      <p>
+        Product must be sealed and unused.<br />
+        Product expiry must be more than 1 month.<br />
+        Upload product images showing expiry date (minimum 3 photos from
+        different angles).<br />
+        To book inspection you must pay ₹100 inspection fee.<br />
+        Inspector will verify the product according to company rules.<br />
+        If the product passes inspection, it will be available for buyers.<br />
+        If the product fails inspection, the inspection fee will not be
+        refunded.
+      </p>
+    </div>
+  </body>
+</html>

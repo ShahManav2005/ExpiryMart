@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Product - ExpiryMart</title>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: linear-gradient(120deg, #eef2ff, #ffffff);
+        color: #222;
+      }
+
+      /* NAVBAR */
+
+      nav {
+        background: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      nav ul {
+        display: flex;
+        justify-content: flex-end;
+        list-style: none;
+        margin: 0;
+        padding: 15px 60px;
+      }
+
+      nav ul li {
+        padding: 10px 20px;
+        font-size: 20px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      nav ul li:hover {
+        color: #2f5cff;
+      }
+
+      /* MAIN CONTENT */
+
+      .container {
+        width: 60%;
+        margin-left: 120px;
+        margin-top: 60px;
+        margin-bottom: 60px;
+      }
+
+      /* HEADINGS */
+
+      h1 {
+        font-size: 50px;
+        color: rgb(24, 40, 122);
+        margin-bottom: 10px;
+      }
+
+      h3 {
+        font-size: 22px;
+        color: #2f5cff;
+        margin-bottom: 10px;
+        margin-top: 35px;
+      }
+
+      /* FORM GROUPS */
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        font-size: 16px;
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 6px;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        font-size: 16px;
+        padding: 10px 14px;
+        border: 1.5px solid #ccc;
+        border-radius: 6px;
+        font-family: "Segoe UI", Arial, sans-serif;
+        color: #222;
+        background: #fff;
+        box-sizing: border-box;
+        transition: border 0.2s;
+        outline: none;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        border-color: #2f5cff;
+      }
+
+      .form-group input::placeholder,
+      .form-group textarea::placeholder {
+        color: #aaa;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      /* INSPECTION FEE NOTE */
+
+      .fee-note {
+        background: #fff8e1;
+        border-left: 4px solid #f4a435;
+        padding: 12px 16px;
+        border-radius: 4px;
+        font-size: 15px;
+        color: #7a5a1a;
+        margin-bottom: 30px;
+      }
+
+      /* TERMS */
+
+      p {
+        font-size: 16px;
+        line-height: 2;
+        color: #444;
+      }
+
+      /* BUTTON */
+
+      .action-buttons {
+        margin-top: 30px;
+      }
+
+      .action-buttons button {
+        font-size: 18px;
+        padding: 10px 28px;
+        margin-right: 10px;
+        background: #2f5cff;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .action-buttons button:hover {
+        background: white;
+        color: #2f5cff;
+        border: 2px solid #2f5cff;
+      }
+    </style>
+
+  </head>
+
+  <body>
+    <nav>
+      <ul>
+        <a href="sellerDashBord.html"><li>Home</li></a>
+        <a href="addproduct.html"><li>Add Product</li></a>
+        <a href="inspection-status.html"><li>Inspection Status</li></a>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <h1>Add Product</h1>
+
+      <div class="fee-note">
+        ₹100 inspection fee is required at submission. Refundable if product
+        passes inspection.
+      </div>
+
+     <form id="productForm">
+        <div class="form-grid">
+          <!-- <input type="hidden" name="seller_id" value="seller_001"> -->
+          <div class="form-group">
+            <label>Product Name</label>
+            <input
+              type="text"
+              name="product_name"
+              placeholder="e.g. Paracetamol 500mg"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Category</label>
+            <select name="category">
+              <option value="" disabled selected>Select category</option>
+              <option>Medicines (OTC)</option>
+              <option>Groceries / FMCG</option>
+              <option>Personal Care</option>
+              <option>Health Supplements</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>MRP (₹)</label>
+            <input type="number" name="mrp" placeholder="e.g. 100" />
+          </div>
+
+          <div class="form-group">
+            <label>Expiry Date</label>
+            <input type="date" name="expiry_date" />
+          </div>
+
+          <div class="form-group">
+            <label>Quantity</label>
+            <input type="number" name="quantity" placeholder="e.g. 5" />
+          </div>
+
+          <div class="form-group">
+            <label>Upload Product Photos</label>
+            <input type="file" name="photos" accept="image/*" multiple />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Product Details</label>
+          <textarea
+            rows="4"
+            name="details"
+            placeholder="Brand, composition, packaging details..."
+          ></textarea>
+        </div>
+
+        <h3>Terms & Conditions :</h3>
+
+        <p>
+          Product must be sealed and unused.<br />
+          Expiry date must be more than 1 month from today.<br />
+          Only OTC medicines are allowed — no prescription drugs.<br />
+          Upload minimum 3 photos with expiry date clearly visible.<br />
+          Inspector will physically verify the product at your location.<br />
+          Inspection fee is non-refundable if product fails due to fraud.
+        </p>
+
+        <div class="action-buttons">
+          <button type="submit">Submit for Inspection</button>
+          <button type="button">Cancel</button>
+        </div>
+
+          
+        </div>
+      </form>
+    </div>
+
+    <script>
+  document.getElementById("productForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    
+    // Attach seller_id from localStorage (set during login)
+    const sellerId = localStorage.getItem("user_id");
+    if (!sellerId) {
+      alert("Please login first");
+      window.location.href = "../login.html";
+      return;
+    }
+    formData.append("seller_id", sellerId);
+
+    fetch("http://localhost:5000/seller/add-product", {
+      method: "POST",
+      credentials: "include",
+      body: formData
+    })
+    .then(res => {
+      if (!res.ok) {
+        return res.json().then(err => { throw new Error(err.error || "Server error " + res.status); });
+      }
+      return res.json();
+    })
+    .then(data => {
+      if (data.error) {
+        alert("Error: " + data.error);
+        return;
+      }
+      // Redirect to payment page with product_id
+      window.location.href = "insepection-payment.html?product_id=" + data.product_id;
+    })
+    .catch(err => {
+      alert("Failed: " + err.message);
+      console.error(err);
+    });
+  });
+</script>
+  </body>
+</html>

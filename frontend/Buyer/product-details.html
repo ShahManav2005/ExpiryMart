@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Product Details – ExpiryMart</title>
+
+    <style>
+      /* GLOBAL */
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: linear-gradient(120deg, #eef2ff, #ffffff);
+        color: #222;
+      }
+
+      /* NAVBAR */
+
+      nav {
+        background: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      nav ul {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        list-style: none;
+        padding: 15px 60px;
+        margin: 0;
+      }
+
+      nav ul li {
+        padding: 10px 20px;
+        font-size: 18px;
+        font-weight: 500;
+        cursor: pointer;
+      }
+
+      nav ul li a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      nav ul li a:hover {
+        color: #2f5cff;
+      }
+
+      .auth-btn {
+        font-size: 16px;
+        padding: 8px 18px;
+        background: #2f5cff;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      /* MAIN WRAPPER */
+
+      .container {
+        width: 70%;
+        margin: 40px auto;
+      }
+
+      /* PRODUCT LAYOUT */
+
+      .product-layout {
+        display: flex;
+        gap: 40px;
+        align-items: flex-start;
+      }
+
+      /* PRODUCT IMAGE */
+
+      .product-image img {
+        width: 300px;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 10px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+      }
+
+      /* PRODUCT INFO */
+
+      .product-info h1 {
+        font-size: 28px;
+        color: rgb(24, 40, 122);
+        margin-bottom: 10px;
+      }
+
+      .product-info p {
+        font-size: 16px;
+        line-height: 1.7;
+        color: #444;
+        margin: 5px 0;
+      }
+
+      /* PRICE */
+
+      .price {
+        font-size: 34px;
+        font-weight: 800;
+        color: #2f5cff;
+      }
+
+      .old-price {
+        font-size: 18px;
+        color: #aaa;
+        text-decoration: line-through;
+        margin-left: 10px;
+      }
+
+      .save {
+        font-size: 15px;
+        color: #059669;
+        font-weight: 600;
+        margin: 6px 0 14px;
+      }
+
+      .expiry {
+        font-size: 15px;
+        color: #d97706;
+        font-weight: 600;
+        margin: 8px 0;
+      }
+
+      .verify {
+        font-size: 15px;
+        color: #059669;
+        font-weight: 600;
+      }
+
+      /* BUTTONS */
+
+      .btn-primary {
+        display: inline-block;
+        padding: 11px 26px;
+        background: #2f5cff;
+        color: white;
+        border-radius: 6px;
+        font-size: 16px;
+        text-decoration: none;
+        margin-right: 10px;
+        margin-top: 10px;
+      }
+
+      .btn-outline {
+        display: inline-block;
+        padding: 11px 26px;
+        background: white;
+        color: #2f5cff;
+        border: 2px solid #2f5cff;
+        border-radius: 6px;
+        font-size: 16px;
+        text-decoration: none;
+        margin-top: 10px;
+      }
+    </style>
+
+    <!-- <script>
+      fetch("http://localhost:5000/buyer/products")
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        });
+    // </script> -->
+  </head>
+
+  <body>
+    <!-- HEADER / NAVBAR -->
+
+    <header>
+      <nav>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="cart.html">Cart</a></li>
+          <li><a href="order-history.html">My Orders</a></li>
+          <li><button class="auth-btn">Logout</button></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- MAIN CONTENT -->
+
+    <main class="container">
+      <div id="product-list"></div>
+    </main>
+
+    <!-- ✅ MOVE SCRIPT HERE -->
+    <script>
+      fetch("http://localhost:5000/buyer/products")
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("DATA:", data);
+
+          const container = document.getElementById("product-list");
+
+          container.innerHTML = "";
+
+          if (!data.length) {
+            container.innerHTML = "<h2>No products found</h2>";
+            return;
+          }
+
+          data.forEach((product) => {
+            container.innerHTML += `
+        <section class="product-layout" style="margin-bottom:40px;">
+            <div class="product-info">
+                <h1>${product.name}</h1>
+                <p><strong>Category:</strong> ${product.category}</p>
+                <p class="verify">✅ Verified</p>
+                <p class="expiry">⏱ Expires: ${product.expiry}</p>
+
+                  <div style="margin-top:20px;">
+                    <button onclick="buyProduct('${product.id}')" class="btn-primary" style="margin-top:0; border:none; cursor:pointer;">Buy</button>
+                  </div>
+            </div>
+        </section>
+        `;
+          });
+        })
+        .catch((err) => console.error(err));
+
+      function buyProduct(productId) {
+        if (!confirm("Are you sure you want to buy this product?")) return;
+
+        fetch(`http://localhost:5000/buyer/buy/${productId}`, {
+          method: "POST",
+          credentials: "include"
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.error) {
+            alert("Error: " + data.error);
+          } else {
+            alert("Order placed successfully!");
+            location.reload(); // this removes it from the list since it's now sold
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          alert("Failed to place order.");
+        });
+      }
+    </script>
+  </body>
+</html>

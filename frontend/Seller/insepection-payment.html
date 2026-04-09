@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inspection Payment - ExpiryMart</title>
+
+<style>
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(120deg, #eef2ff, #ffffff);
+    color: #222;
+}
+
+/* NAVBAR */
+
+nav {
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+nav ul {
+    display: flex;
+    justify-content: flex-end;
+    list-style: none;
+    margin: 0;
+    padding: 15px 60px;
+}
+
+nav ul li {
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+nav ul li:hover {
+    color: #2f5cff;
+}
+
+/* MAIN CONTENT */
+
+.container {
+    width: 60%;
+    margin-left: 120px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+/* HEADINGS */
+
+h1 {
+    font-size: 50px;
+    color: rgb(24, 40, 122);
+    margin-bottom: 10px;
+}
+
+h3 {
+    font-size: 22px;
+    color: #2f5cff;
+    margin-bottom: 15px;
+    margin-top: 0;
+}
+
+/* PARAGRAPH */
+
+p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #444;
+    margin-bottom: 6px;
+}
+
+/* INFO NOTE */
+
+.info-note {
+    background: #eef2ff;
+    border-left: 4px solid #2f5cff;
+    padding: 14px 18px;
+    border-radius: 4px;
+    margin: 20px 0 35px 0;
+}
+
+.info-note p {
+    margin: 0;
+    font-size: 15px;
+    color: #333;
+    line-height: 1.8;
+}
+
+/* PRODUCT SUMMARY BOX */
+
+.summary-box {
+    background: white;
+    border: 1.5px solid #dde3ff;
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 28px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #eef0f8;
+    font-size: 17px;
+}
+
+.summary-row:last-child {
+    border-bottom: none;
+}
+
+.summary-row .label {
+    color: #666;
+    font-weight: 400;
+}
+
+.summary-row .value {
+    color: #222;
+    font-weight: 500;
+}
+
+.summary-row.fee-row .label {
+    color: rgb(24, 40, 122);
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.summary-row.fee-row .value {
+    color: #2f5cff;
+    font-weight: 700;
+    font-size: 22px;
+}
+
+/* REFUND BADGE */
+
+.refund-badge {
+    display: inline-block;
+    background: #e6ffe6;
+    color: #1a7a1a;
+    border: 1px solid #99dd99;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 28px;
+}
+
+/* BUTTONS */
+
+.action-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.action-buttons button {
+    font-size: 18px;
+    padding: 12px 32px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    border: none;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.btn-pay {
+    background: #2f5cff;
+    color: white;
+}
+
+.btn-pay:hover {
+    background: white;
+    color: #2f5cff;
+    border: 2px solid #2f5cff !important;
+}
+
+.btn-cancel {
+    background: white;
+    color: #888;
+    border: 1.5px solid #ccc !important;
+}
+
+.btn-cancel:hover {
+    background: #f5f5f5;
+    color: #444;
+}
+
+</style>
+<script>
+    // Get product_id from URL
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get("product_id");
+    console.log("Product ID:", productId);
+
+// <!-- Fetch product data -->
+    fetch(`http://localhost:5000/product/${productId}`)
+    .then(res => res.json())
+    .then(data => {
+
+    document.getElementById("productName").innerText = data.product_name;
+    document.getElementById("category").innerText = data.category;
+    document.getElementById("expiry").innerText = data.expiry_date;
+
+    })
+
+    .catch(err => {
+        alert("Failed to load product details. Please try again.");
+        console.error(err);
+    });
+
+
+
+// <!-- Payment Function --!>
+    function payNow(){
+
+    fetch("http://localhost:5000/seller/pay-inspection", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ product_id: productId })
+    })
+    .then(res=>res.json())
+    .then(data=>{
+        alert("Payment Successful!");
+        window.location.href = "inspection-status.html";
+    })
+    .catch(err => {
+        alert("Payment failed. Please try again.");
+        console.error(err);
+    })
+
+    }
+</script>
+</head>
+
+<body>
+
+<nav>
+    <ul>
+        <li>Home</li>
+        <li>Add Product</li>
+        <li>History</li>
+        <li>Inspection Status</li>
+    </ul>
+</nav>
+
+<div class="container">
+
+    <h1>Inspection Payment</h1>
+
+    <div class="info-note">
+        <p>A mandatory inspection fee of <strong>₹100</strong> is required before your product can be listed.</p>
+        <p>Our inspector will visit your location, verify the product against our terms, and approve it for sale.</p>
+    </div>
+
+    <h3>Product Summary</h3>
+
+    <div class="summary-box">
+
+        <div class="summary-row">
+            <span class="label">Product Name</span>
+            <span class="value" id="productName"></span>
+            <!-- fetched from DB -->
+        </div>
+
+        <div class="summary-row">
+            <span class="label">Category</span>
+            <span class="value" id="category"></span>
+            <!-- fetched from DB -->
+        </div>
+
+        <div class="summary-row">
+            <span class="label">Expiry Date</span>
+            <span class="value" id="expiry"></span>
+            <!-- fetched from DB -->
+        </div>
+
+        <div class="summary-row fee-row">
+            <span class="label">Inspection Fee</span>
+            <span class="value">₹100</span>
+        </div>
+
+    </div>
+
+    <div class="refund-badge">✓ Refundable if product passes inspection</div>
+
+    <div class="action-buttons">
+        <button class="btn-pay" onclick="payNow()">Pay Now</button>
+        <button class="btn-cancel">Cancel</button>
+    </div>
+
+</div>
+
+</body>
+</html>

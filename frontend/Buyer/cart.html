@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Cart – ExpiryMart</title>
+
+<style>
+
+/* GLOBAL */
+
+body{
+margin:0;
+font-family:"Segoe UI", Arial, sans-serif;
+background:linear-gradient(120deg,#eef2ff,#ffffff);
+color:#222;
+}
+
+/* NAVBAR */
+
+nav{
+background:white;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+nav ul{
+display:flex;
+justify-content:flex-end;
+align-items:center;
+list-style:none;
+padding:15px 60px;
+margin:0;
+}
+
+nav ul li{
+padding:10px 20px;
+font-size:18px;
+font-weight:500;
+cursor:pointer;
+}
+
+nav ul li a{
+text-decoration:none;
+color:inherit;
+}
+
+nav ul li a:hover{
+color:#2f5cff;
+}
+
+.auth-btn{
+font-size:16px;
+padding:8px 18px;
+background:#2f5cff;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+/* MAIN CONTAINER */
+
+.container{
+width:65%;
+margin:40px auto;
+}
+
+/* PAGE TITLE */
+
+h1{
+font-size:36px;
+color:rgb(24,40,122);
+margin-bottom:24px;
+}
+
+/* CART ITEM */
+
+.cart-item{
+display:flex;
+align-items:center;
+gap:18px;
+background:white;
+border-radius:10px;
+box-shadow:0 2px 8px rgba(0,0,0,0.08);
+padding:16px;
+margin-bottom:14px;
+}
+
+.cart-item img{
+width:80px;
+height:80px;
+object-fit:cover;
+border-radius:8px;
+}
+
+.item-name{
+font-size:16px;
+font-weight:700;
+color:rgb(24,40,122);
+}
+
+.item-sub{
+font-size:13px;
+color:#888;
+margin-top:4px;
+}
+
+.price-area{
+margin-left:auto;
+text-align:right;
+}
+
+.price{
+font-size:18px;
+font-weight:800;
+color:#2f5cff;
+}
+
+.old-price{
+font-size:13px;
+color:#aaa;
+text-decoration:line-through;
+}
+
+/* PRICE SUMMARY */
+
+.summary{
+background:white;
+border-radius:10px;
+box-shadow:0 2px 8px rgba(0,0,0,0.08);
+padding:22px;
+margin-top:20px;
+}
+
+.summary p{
+font-size:16px;
+color:#444;
+margin:6px 0;
+}
+
+.total{
+font-size:22px;
+font-weight:800;
+color:rgb(24,40,122);
+margin-top:12px;
+}
+
+/* BUTTON */
+
+.checkout-btn{
+display:inline-block;
+padding:12px 28px;
+font-size:16px;
+background:#2f5cff;
+color:white;
+border-radius:6px;
+text-decoration:none;
+margin-top:14px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+<nav>
+<ul>
+<li><a href="../index.html">Home</a></li>
+<li><a href="buyer-dashboard.html">Browse</a></li>
+<li><a href="cart.html">Cart</a></li>
+</ul>
+</nav>
+
+</header>
+
+<!-- MAIN -->
+
+<main class="container">
+
+<h1>🛒 My Cart</h1>
+
+<!-- CART ITEMS -->
+
+<section id="cart-list">
+    <h4>Loading cart...</h4>
+</section>
+
+<!-- PRICE SUMMARY -->
+
+<section class="summary">
+
+    <p id="subtotal">Subtotal: ₹0</p>
+
+    <p id="discount" style="color:#059669;font-weight:600">
+        Discount Savings: − ₹0
+    </p>
+
+    <p id="delivery">Delivery: ₹0</p>
+
+    <div class="total" id="total">Total: ₹0</div>
+
+    <a href="checkout.html" class="checkout-btn">
+        Proceed to Checkout →
+    </a>
+
+</section>
+
+<script>
+function loadCart() {
+    const buyerId = localStorage.getItem("user_id");
+    if (!buyerId) {
+        document.getElementById("cart-list").innerHTML = "<h4>Please log in to view your cart.</h4>";
+        return;
+    }
+    
+    fetch(`http://localhost:5000/buyer/cart/${buyerId}`)
+    .then(res => res.json())
+    .then(data => {
+        const container = document.getElementById("cart-list");
+        container.innerHTML = "";
+
+        if (data.length === 0) {
+            container.innerHTML = "<h4>Your cart is empty.</h4>";
+            updateSummary(0, 0);
+            return;
+        }
+
+        let subtotal = 0;
+        let totalMrp = 0;
+
+        data.forEach(item => {
+            subtotal += item.selling_price;
+            totalMrp += parseFloat(item.mrp || item.selling_price);
+
+            container.innerHTML += `
+            <div class="cart-item">
+                <div>
+                    <div class="item-name">${item.name}</div>
+                    <div class="item-sub">${item.category || "General"} · Expires in ${item.days_left} days</div>
+                    <button onclick="removeFromCart('${item.cart_id}')" style="margin-top:8px; background:#ef4444; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; font-size:12px;">Remove</button>
+                </div>
+                <div class="price-area">
+                    <div class="price">₹${item.selling_price.toFixed(2)}</div>
+                    ${item.mrp ? `<div class="old-price">₹${item.mrp}</div>` : ''}
+                </div>
+            </div>
+            `;
+        });
+        
+        updateSummary(subtotal, totalMrp);
+    })
+    .catch(err => {
+        console.error(err);
+        document.getElementById("cart-list").innerHTML = "<h4>Failed to load cart.</h4>";
+    });
+}
+
+function updateSummary(subtotal, totalMrp) {
+    let discount = totalMrp - subtotal;
+    if (discount < 0) discount = 0;
+    let delivery = subtotal > 0 ? 40 : 0;
+    let total = subtotal + delivery;
+
+    document.getElementById("subtotal").innerText = `Subtotal: ₹${subtotal.toFixed(2)}`;
+    document.getElementById("discount").innerText = `Discount Savings: − ₹${discount.toFixed(2)}`;
+    document.getElementById("delivery").innerText = `Delivery: ₹${delivery.toFixed(2)}`;
+    document.getElementById("total").innerText = `Total: ₹${total.toFixed(2)}`;
+}
+
+function removeFromCart(cartId) {
+    fetch(`http://localhost:5000/buyer/cart/remove/${cartId}`, {
+        method: 'DELETE'
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.error) alert(data.error);
+        else loadCart();
+    })
+    .catch(err => console.error(err));
+}
+
+// Load cart on start
+loadCart();
+</script>
+
+</main>
+
+</body>
+</html>
