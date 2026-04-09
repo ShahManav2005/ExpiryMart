@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -116,7 +116,7 @@
 
       function approveProduct(id) {
         if (!id) { alert("Invalid product ID"); return; }
-        fetch(`http://localhost:5000/inspector/approve/${id}`, {
+        fetch(`https://expirymart-backend.onrender.com/inspector/approve/${id}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include"
@@ -133,7 +133,7 @@
       function rejectProduct(id) {
         if (!id) { alert("Invalid product ID"); return; }
         const comment = prompt("Enter rejection reason:") || "Rejected by inspector";
-        fetch(`http://localhost:5000/inspector/reject/${id}`, {
+        fetch(`https://expirymart-backend.onrender.com/inspector/reject/${id}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -148,7 +148,7 @@
           .catch(err => { alert("Reject failed: " + err.message); console.error(err); });
       }
 
-      fetch("http://localhost:5000/inspector/dashboard", {
+      fetch("https://expirymart-backend.onrender.com/inspector/dashboard", {
           credentials: "include"
       })
         .then(res => res.json())

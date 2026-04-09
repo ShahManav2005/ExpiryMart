@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 
 <head>
@@ -289,7 +289,7 @@
   </style>
 
   <script>
-    fetch("http://localhost:5000/buyer/products", { credentials: "include" })
+    fetch("https://expirymart-backend.onrender.com/buyer/products", { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         const container = document.getElementById("product-list");
@@ -325,7 +325,7 @@
     function buyProduct(productId) {
       if (!confirm("Are you sure you want to buy this product?")) return;
 
-      fetch(`http://localhost:5000/buyer/buy/${productId}`, {
+      fetch(`https://expirymart-backend.onrender.com/buyer/buy/${productId}`, {
         method: "POST",
         credentials: "include"
       })
@@ -350,7 +350,7 @@
         alert("Please log in to add items to your cart.");
         return;
       }
-      fetch("http://localhost:5000/buyer/cart/add", {
+      fetch("https://expirymart-backend.onrender.com/buyer/cart/add", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ buyer_id: buyerId, product_id: productId })

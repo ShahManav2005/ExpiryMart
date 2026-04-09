@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -198,7 +198,7 @@ p {
     console.log("Product ID:", productId);
 
 // <!-- Fetch product data -->
-    fetch(`http://localhost:5000/product/${productId}`)
+    fetch(`https://expirymart-backend.onrender.com/product/${productId}`)
     .then(res => res.json())
     .then(data => {
 
@@ -218,7 +218,7 @@ p {
 // <!-- Payment Function --!>
     function payNow(){
 
-    fetch("http://localhost:5000/seller/pay-inspection", {
+    fetch("https://expirymart-backend.onrender.com/seller/pay-inspection", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

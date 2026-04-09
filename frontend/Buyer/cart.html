@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 
 <head>
@@ -217,7 +217,7 @@ function loadCart() {
         return;
     }
     
-    fetch(`http://localhost:5000/buyer/cart/${buyerId}`)
+    fetch(`https://expirymart-backend.onrender.com/buyer/cart/${buyerId}`)
     .then(res => res.json())
     .then(data => {
         const container = document.getElementById("cart-list");
@@ -272,7 +272,7 @@ function updateSummary(subtotal, totalMrp) {
 }
 
 function removeFromCart(cartId) {
-    fetch(`http://localhost:5000/buyer/cart/remove/${cartId}`, {
+    fetch(`https://expirymart-backend.onrender.com/buyer/cart/remove/${cartId}`, {
         method: 'DELETE'
     })
     .then(res => res.json())
