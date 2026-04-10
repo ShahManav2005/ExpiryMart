@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -198,7 +198,7 @@ p {
     console.log("Product ID:", productId);
 
 // <!-- Fetch product data -->
-    fetch(`https://expirymart-backend.onrender.com/product/${productId}`)
+    fetch(`https://expirymart.onrender.com/product/${productId}`)
     .then(res => res.json())
     .then(data => {
 
@@ -218,7 +218,7 @@ p {
 // <!-- Payment Function --!>
     function payNow(){
 
-    fetch("https://expirymart-backend.onrender.com/seller/pay-inspection", {
+    fetch("https://expirymart.onrender.com/seller/pay-inspection", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -254,7 +254,7 @@ p {
     <h1>Inspection Payment</h1>
 
     <div class="info-note">
-        <p>A mandatory inspection fee of <strong>₹100</strong> is required before your product can be listed.</p>
+        <p>A mandatory inspection fee of <strong>?100</strong> is required before your product can be listed.</p>
         <p>Our inspector will visit your location, verify the product against our terms, and approve it for sale.</p>
     </div>
 
@@ -282,12 +282,12 @@ p {
 
         <div class="summary-row fee-row">
             <span class="label">Inspection Fee</span>
-            <span class="value">₹100</span>
+            <span class="value">?100</span>
         </div>
 
     </div>
 
-    <div class="refund-badge">✓ Refundable if product passes inspection</div>
+    <div class="refund-badge">? Refundable if product passes inspection</div>
 
     <div class="action-buttons">
         <button class="btn-pay" onclick="payNow()">Pay Now</button>

@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -171,7 +171,7 @@
       <h1>Add Product</h1>
 
       <div class="fee-note">
-        ₹100 inspection fee is required at submission. Refundable if product
+        ?100 inspection fee is required at submission. Refundable if product
         passes inspection.
       </div>
 
@@ -200,7 +200,7 @@
           </div>
 
           <div class="form-group">
-            <label>MRP (₹)</label>
+            <label>MRP (?)</label>
             <input type="number" name="mrp" placeholder="e.g. 100" />
           </div>
 
@@ -234,7 +234,7 @@
         <p>
           Product must be sealed and unused.<br />
           Expiry date must be more than 1 month from today.<br />
-          Only OTC medicines are allowed — no prescription drugs.<br />
+          Only OTC medicines are allowed � no prescription drugs.<br />
           Upload minimum 3 photos with expiry date clearly visible.<br />
           Inspector will physically verify the product at your location.<br />
           Inspection fee is non-refundable if product fails due to fraud.
@@ -265,7 +265,7 @@
     }
     formData.append("seller_id", sellerId);
 
-    fetch("https://expirymart-backend.onrender.com/seller/add-product", {
+    fetch("https://expirymart.onrender.com/seller/add-product", {
       method: "POST",
       credentials: "include",
       body: formData

@@ -1,8 +1,8 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Inspector Dashboard – ExpiryMart</title>
+    <title>Inspector Dashboard � ExpiryMart</title>
 
     <style>
       body {
@@ -79,7 +79,7 @@
       }
     </style>
 
-    <!-- ✅ No script in head -->
+    <!-- ? No script in head -->
 
   </head>
 
@@ -107,16 +107,16 @@
             <th>Action</th>
           </tr>
         </thead>
-        <tbody id="tableBody"></tbody>  <!-- ✅ exists before script runs -->
+        <tbody id="tableBody"></tbody>  <!-- ? exists before script runs -->
       </table>
     </div>
 
-    <!-- ✅ Script moved here, just before </body> -->
+    <!-- ? Script moved here, just before </body> -->
     <script>
 
       function approveProduct(id) {
         if (!id) { alert("Invalid product ID"); return; }
-        fetch(`https://expirymart-backend.onrender.com/inspector/approve/${id}`, {
+        fetch(`https://expirymart.onrender.com/inspector/approve/${id}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include"
@@ -124,7 +124,7 @@
           .then(res => res.json())
           .then(data => {
             if (data.error) { alert("Error: " + data.error); return; }
-            alert("✅ Product Approved!");
+            alert("? Product Approved!");
             location.reload();
           })
           .catch(err => { alert("Approve failed: " + err.message); console.error(err); });
@@ -133,7 +133,7 @@
       function rejectProduct(id) {
         if (!id) { alert("Invalid product ID"); return; }
         const comment = prompt("Enter rejection reason:") || "Rejected by inspector";
-        fetch(`https://expirymart-backend.onrender.com/inspector/reject/${id}`, {
+        fetch(`https://expirymart.onrender.com/inspector/reject/${id}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -142,13 +142,13 @@
           .then(res => res.json())
           .then(data => {
             if (data.error) { alert("Error: " + data.error); return; }
-            alert("❌ Product Rejected.");
+            alert("? Product Rejected.");
             location.reload();
           })
           .catch(err => { alert("Reject failed: " + err.message); console.error(err); });
       }
 
-      fetch("https://expirymart-backend.onrender.com/inspector/dashboard", {
+      fetch("https://expirymart.onrender.com/inspector/dashboard", {
           credentials: "include"
       })
         .then(res => res.json())
@@ -164,9 +164,9 @@
             const pid = product.id || "";
             const row = `
               <tr>
-                <td>${product.seller_id || "—"}</td>
-                <td>${product.product_name || "—"}</td>
-                <td>${product.expiry_date || "—"}</td>
+                <td>${product.seller_id || "�"}</td>
+                <td>${product.product_name || "�"}</td>
+                <td>${product.expiry_date || "�"}</td>
                 <td>Vadodara</td>
                 <td>
                   <button onclick="approveProduct('${pid}')" class="btn">Approve</button>

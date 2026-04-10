@@ -1,10 +1,10 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Product Details – ExpiryMart</title>
+    <title>Product Details � ExpiryMart</title>
 
     <style>
       /* GLOBAL */
@@ -161,7 +161,7 @@
     </style>
 
     <!-- <script>
-      fetch("https://expirymart-backend.onrender.com/buyer/products")
+      fetch("https://expirymart.onrender.com/buyer/products")
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
@@ -189,9 +189,9 @@
       <div id="product-list"></div>
     </main>
 
-    <!-- ✅ MOVE SCRIPT HERE -->
+    <!-- ? MOVE SCRIPT HERE -->
     <script>
-      fetch("https://expirymart-backend.onrender.com/buyer/products")
+      fetch("https://expirymart.onrender.com/buyer/products")
         .then((res) => res.json())
         .then((data) => {
           console.log("DATA:", data);
@@ -211,8 +211,8 @@
             <div class="product-info">
                 <h1>${product.name}</h1>
                 <p><strong>Category:</strong> ${product.category}</p>
-                <p class="verify">✅ Verified</p>
-                <p class="expiry">⏱ Expires: ${product.expiry}</p>
+                <p class="verify">? Verified</p>
+                <p class="expiry">? Expires: ${product.expiry}</p>
 
                   <div style="margin-top:20px;">
                     <button onclick="buyProduct('${product.id}')" class="btn-primary" style="margin-top:0; border:none; cursor:pointer;">Buy</button>
@@ -227,7 +227,7 @@
       function buyProduct(productId) {
         if (!confirm("Are you sure you want to buy this product?")) return;
 
-        fetch(`https://expirymart-backend.onrender.com/buyer/buy/${productId}`, {
+        fetch(`https://expirymart.onrender.com/buyer/buy/${productId}`, {
           method: "POST",
           credentials: "include"
         })

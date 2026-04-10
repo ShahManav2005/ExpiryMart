@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 
 <head>
 <meta charset="UTF-8">
-<title>Cart – ExpiryMart</title>
+<title>Cart � ExpiryMart</title>
 
 <style>
 
@@ -181,7 +181,7 @@ margin-top:14px;
 
 <main class="container">
 
-<h1>🛒 My Cart</h1>
+<h1>?? My Cart</h1>
 
 <!-- CART ITEMS -->
 
@@ -193,18 +193,18 @@ margin-top:14px;
 
 <section class="summary">
 
-    <p id="subtotal">Subtotal: ₹0</p>
+    <p id="subtotal">Subtotal: ?0</p>
 
     <p id="discount" style="color:#059669;font-weight:600">
-        Discount Savings: − ₹0
+        Discount Savings: - ?0
     </p>
 
-    <p id="delivery">Delivery: ₹0</p>
+    <p id="delivery">Delivery: ?0</p>
 
-    <div class="total" id="total">Total: ₹0</div>
+    <div class="total" id="total">Total: ?0</div>
 
     <a href="checkout.html" class="checkout-btn">
-        Proceed to Checkout →
+        Proceed to Checkout ?
     </a>
 
 </section>
@@ -217,7 +217,7 @@ function loadCart() {
         return;
     }
     
-    fetch(`https://expirymart-backend.onrender.com/buyer/cart/${buyerId}`)
+    fetch(`https://expirymart.onrender.com/buyer/cart/${buyerId}`)
     .then(res => res.json())
     .then(data => {
         const container = document.getElementById("cart-list");
@@ -240,12 +240,12 @@ function loadCart() {
             <div class="cart-item">
                 <div>
                     <div class="item-name">${item.name}</div>
-                    <div class="item-sub">${item.category || "General"} · Expires in ${item.days_left} days</div>
+                    <div class="item-sub">${item.category || "General"} � Expires in ${item.days_left} days</div>
                     <button onclick="removeFromCart('${item.cart_id}')" style="margin-top:8px; background:#ef4444; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; font-size:12px;">Remove</button>
                 </div>
                 <div class="price-area">
-                    <div class="price">₹${item.selling_price.toFixed(2)}</div>
-                    ${item.mrp ? `<div class="old-price">₹${item.mrp}</div>` : ''}
+                    <div class="price">?${item.selling_price.toFixed(2)}</div>
+                    ${item.mrp ? `<div class="old-price">?${item.mrp}</div>` : ''}
                 </div>
             </div>
             `;
@@ -265,14 +265,14 @@ function updateSummary(subtotal, totalMrp) {
     let delivery = subtotal > 0 ? 40 : 0;
     let total = subtotal + delivery;
 
-    document.getElementById("subtotal").innerText = `Subtotal: ₹${subtotal.toFixed(2)}`;
-    document.getElementById("discount").innerText = `Discount Savings: − ₹${discount.toFixed(2)}`;
-    document.getElementById("delivery").innerText = `Delivery: ₹${delivery.toFixed(2)}`;
-    document.getElementById("total").innerText = `Total: ₹${total.toFixed(2)}`;
+    document.getElementById("subtotal").innerText = `Subtotal: ?${subtotal.toFixed(2)}`;
+    document.getElementById("discount").innerText = `Discount Savings: - ?${discount.toFixed(2)}`;
+    document.getElementById("delivery").innerText = `Delivery: ?${delivery.toFixed(2)}`;
+    document.getElementById("total").innerText = `Total: ?${total.toFixed(2)}`;
 }
 
 function removeFromCart(cartId) {
-    fetch(`https://expirymart-backend.onrender.com/buyer/cart/remove/${cartId}`, {
+    fetch(`https://expirymart.onrender.com/buyer/cart/remove/${cartId}`, {
         method: 'DELETE'
     })
     .then(res => res.json())

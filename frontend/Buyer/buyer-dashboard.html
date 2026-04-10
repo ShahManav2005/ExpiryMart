@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <title>Buyer Dashboard – ExpiryMart</title>
+  <title>Buyer Dashboard � ExpiryMart</title>
 
   <style>
     /* GLOBAL */
@@ -185,7 +185,7 @@
     <!-- WELCOME -->
 
     <section>
-      <h1 id="welcomeUser">Welcome 👋</h1>
+      <h1 id="welcomeUser">Welcome ??</h1>
     </section>
 
     <!-- STATS -->
@@ -198,7 +198,7 @@
       </div>
 
       <div class="stat-card">
-        <div class="stat-value">₹12,450</div>
+        <div class="stat-value">?12,450</div>
         <div class="stat-label">Total Savings</div>
       </div>
 
@@ -208,7 +208,7 @@
       </div>
 
       <div class="stat-card">
-        <div class="stat-value">4.8 ⭐</div>
+        <div class="stat-value">4.8 ?</div>
         <div class="stat-label">Buyer Rating</div>
       </div>
 
@@ -227,7 +227,7 @@
     // Set dynamic user name
     const userName = localStorage.getItem("name");
     if (userName) {
-      document.getElementById("welcomeUser").innerText = `Welcome, ${userName} 👋`;
+      document.getElementById("welcomeUser").innerText = `Welcome, ${userName} ??`;
     }
   </script>
 
@@ -289,7 +289,7 @@
   </style>
 
   <script>
-    fetch("https://expirymart-backend.onrender.com/buyer/products", { credentials: "include" })
+    fetch("https://expirymart.onrender.com/buyer/products", { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         const container = document.getElementById("product-list");
@@ -304,12 +304,12 @@
           container.innerHTML += `
           <section class="product-layout">
               <div class="product-info">
-                  <h3>${product.name || "—"}</h3>
-                  <p><strong>Category:</strong> ${product.category || "—"}</p>
-                  <p class="verify">✅ Approved by Inspector</p>
-                  <p class="expiry">⏱ Expires: ${product.expiry || "—"}</p>
+                  <h3>${product.name || "�"}</h3>
+                  <p><strong>Category:</strong> ${product.category || "�"}</p>
+                  <p class="verify">? Approved by Inspector</p>
+                  <p class="expiry">? Expires: ${product.expiry || "�"}</p>
 
-                  <div class="price">₹${product.buying_price || 0}</div>
+                  <div class="price">?${product.buying_price || 0}</div>
                   
                   <div style="margin-top:20px;">
                     <button onclick="buyProduct('${product.id}')" class="btn" style="margin-top:0; border:none; cursor:pointer;">Buy</button>
@@ -325,7 +325,7 @@
     function buyProduct(productId) {
       if (!confirm("Are you sure you want to buy this product?")) return;
 
-      fetch(`https://expirymart-backend.onrender.com/buyer/buy/${productId}`, {
+      fetch(`https://expirymart.onrender.com/buyer/buy/${productId}`, {
         method: "POST",
         credentials: "include"
       })
@@ -350,7 +350,7 @@
         alert("Please log in to add items to your cart.");
         return;
       }
-      fetch("https://expirymart-backend.onrender.com/buyer/cart/add", {
+      fetch("https://expirymart.onrender.com/buyer/cart/add", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ buyer_id: buyerId, product_id: productId })
