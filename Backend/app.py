@@ -8,9 +8,8 @@ from routes.product_routes import product_routes
 from routes.auth_routes import auth
 
 app = Flask(__name__)
+CORS(app)
 app.secret_key = "expirymart123"
-
-CORS(app, supports_credentials=True, origins="*")
 
 app.register_blueprint(product_routes)
 app.register_blueprint(inspector_routes)
